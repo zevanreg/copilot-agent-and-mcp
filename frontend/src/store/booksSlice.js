@@ -11,12 +11,16 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async ({ sortBy, 
 
 const booksSlice = createSlice({
   name: 'books',
-  initialState: { items: [], status: 'idle', sortBy: 'title', order: 'asc' },
+  initialState: { items: [], status: 'idle', sortBy: 'title', order: 'asc', searchTerm: '' },
   reducers: {
     // generated-by-copilot: update sort state without re-fetching
     setSort: (state, action) => {
       state.sortBy = action.payload.sortBy;
       state.order = action.payload.order;
+    },
+    // generated-by-copilot: update search term for real-time filtering
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
     },
   },
   extraReducers: builder => {
@@ -30,5 +34,20 @@ const booksSlice = createSlice({
   },
 });
 
-export const { setSort } = booksSlice.actions;
+export const { setSort, setSearchTerm } = booksSlice.actions;
+
+// generated-by-copilot: memoised selector that filters books by title/author,
+// normalises accented characters so 'cafe' matches 'café'
+const normalise = str =>
+  (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+export const selectFilteredBooks = state => {
+  const { items, searchTerm } = state.books;
+  if (!searchTerm.trim()) return items;
+  const term = normalise(searchTerm);
+  return items.filter(
+    book => normalise(book.title).includes(term) || normalise(book.author).includes(term)
+  );
+};
+
 export default booksSlice.reducer;

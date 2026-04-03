@@ -1,0 +1,75 @@
+/* generated-by-copilot: SearchInput styles */
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  gap: 0.5rem;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.wrapper:focus-within {
+  border-color: #20b2aa;
+  box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.15);
+}
+
+.searchIcon {
+  flex-shrink: 0;
+  color: #999;
+  transition: color 0.15s;
+}
+
+.wrapper:focus-within .searchIcon {
+  color: #20b2aa;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: #222;
+  min-width: 0;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0;
+}
+
+.input::placeholder {
+  color: #aaa;
+}
+
+.clearBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: #999;
+  border-radius: 50%;
+  transition: color 0.15s, background 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.clearBtn:hover {
+  color: #20b2aa;
+  background: rgba(32, 178, 170, 0.1);
+}
+
+.clearBtn:focus-visible {
+  outline: 2px solid #20b2aa;
+  outline-offset: 1px;
+}
