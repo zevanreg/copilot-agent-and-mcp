@@ -20,5 +20,20 @@
     "username": "testuser123",
     "password": "testpass123",
     "favorites": []
+  },
+  {
+    "username": "e2euser656",
+    "password": "e2epass681",
+    "favorites": []
+  },
+  {
+    "username": "e2euser152",
+    "password": "e2epass511",
+    "favorites": []
+  },
+  {
+    "username": "e2euser139",
+    "password": "e2epass910",
+    "favorites": []
   }
 ]

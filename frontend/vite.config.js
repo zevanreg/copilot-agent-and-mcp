@@ -8,4 +8,10 @@ export default defineConfig({
     port: 5173,
     host: '0.0.0.0',
   },
+  // generated-by-copilot: vitest configuration for unit tests
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test/setup.js',
+  },
 })

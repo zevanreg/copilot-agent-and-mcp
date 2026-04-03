@@ -1,15 +1,18 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchBooks, setSort } from '../store/booksSlice';
+import { fetchBooks, setSort, selectFilteredBooks } from '../store/booksSlice';
 import { addFavorite, fetchFavorites } from '../store/favoritesSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/BookList.module.css';
 import BookReviews from './BookReviews';
+import SearchInput from './SearchInput';
 
 const BookList = () => {
   const dispatch = useAppDispatch();
-  const books = useAppSelector(state => state.books.items);
+  // generated-by-copilot: use filtered selector so search updates the list in real-time
+  const books = useAppSelector(selectFilteredBooks);
+  const allBooks = useAppSelector(state => state.books.items);
   const status = useAppSelector(state => state.books.status);
   const sortBy = useAppSelector(state => state.books.sortBy);
   const order = useAppSelector(state => state.books.order);
@@ -50,6 +53,8 @@ const BookList = () => {
   return (
     <div>
       <h2>Books</h2>
+      {/* generated-by-copilot: search input for real-time filtering */}
+      <SearchInput />
       {/* generated-by-copilot: sort controls with visual indication of active sort */}
       <div className={styles.sortControls}>
         <span className={styles.sortLabel}>Sort by:</span>
@@ -83,8 +88,14 @@ const BookList = () => {
           textAlign: 'center',
           color: '#888',
         }}>
-          <p>No books available.</p>
-          <p>Check back later or add a new book if you have permission.</p>
+          {allBooks.length === 0 ? (
+            <>
+              <p>No books available.</p>
+              <p>Check back later or add a new book if you have permission.</p>
+            </>
+          ) : (
+            <p>No books match your search.</p>
+          )}
         </div>
       ) : (
         <div className={styles.bookGrid}>
