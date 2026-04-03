@@ -97,6 +97,184 @@
   box-shadow: none !important;
   background: none !important;
 }
+
+/* generated-by-copilot: reviews section styles */
+.reviewsSection {
+  width: 100%;
+  margin-top: 0.75rem;
+  border-top: 1px solid #e0f5f4;
+}
+
+.reviewsToggleBtn {
+  background: none;
+  border: none;
+  color: #20b2aa;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  text-align: left;
+}
+
+.reviewsToggleBtn:hover {
+  color: #178d8d;
+}
+
+.reviewsChevron {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.avgRatingBadge {
+  background: #e0f5f4;
+  color: #178d8d;
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.reviewsBody {
+  padding: 0.5rem 0 0.25rem;
+}
+
+.avgRatingSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.avgRatingText {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.starDisplay {
+  letter-spacing: 2px;
+}
+
+.starFilled {
+  color: #f5a623;
+}
+
+.starEmpty {
+  color: #ccc;
+}
+
+.starPicker {
+  display: inline-flex;
+  gap: 0.1rem;
+}
+
+.starPickerBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.1s;
+}
+
+.starPickerBtn:focus {
+  outline: none;
+}
+
+.reviewsList {
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.reviewItem {
+  background: #f7fffe;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.88rem;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.reviewUsername {
+  font-weight: 600;
+  color: #20b2aa;
+}
+
+.reviewText {
+  color: #333;
+  margin: 0.2rem 0;
+  word-break: break-word;
+}
+
+.reviewDate {
+  font-size: 0.78rem;
+  color: #aaa;
+}
+
+.reviewForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.reviewFormRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reviewFormLabel {
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.reviewTextarea {
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.reviewTextarea:focus {
+  outline: none;
+  border-color: #20b2aa;
+}
+
+.reviewsLoading,
+.reviewsEmpty {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: center;
+  padding: 0.4rem 0;
+}
+
+.reviewsError {
+  font-size: 0.85rem;
+  color: #e25555;
+}
+
+.reviewsSuccess {
+  font-size: 0.85rem;
+  color: #20b2aa;
+  font-weight: 600;
+}
 .bookGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
