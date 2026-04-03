@@ -111,4 +111,29 @@ describe('Favorites API', () => {
       .send({ bookId: '1' });
     expect(res.statusCode).toBe(401);
   });
+
+  it('DELETE /api/favorites should clear all favorites', async () => {
+    const token = getToken('sandra');
+    const res = await request(app)
+      .delete('/api/favorites')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toMatch(/cleared/);
+    const users = JSON.parse(fs.readFileSync(usersFile, 'utf-8'));
+    const sandra = users.find(u => u.username === 'sandra');
+    expect(sandra.favorites).toHaveLength(0);
+  });
+
+  it('DELETE /api/favorites should fail without auth', async () => {
+    const res = await request(app).delete('/api/favorites');
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('DELETE /api/favorites should 404 for non-existent user', async () => {
+    const token = getToken('nouser');
+    const res = await request(app)
+      .delete('/api/favorites')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toBe(404);
+  });
 });
