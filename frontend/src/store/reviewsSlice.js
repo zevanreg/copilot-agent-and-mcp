@@ -14,19 +14,33 @@ export const fetchAverageRating = createAsyncThunk('reviews/fetchAverageRating',
   return { bookId, averageRating: data.averageRating, count: data.count };
 });
 
-// generated-by-copilot: submit a new review for a book
+// generated-by-copilot: submit a new review for a book with proper error and auth handling
 export const submitReview = createAsyncThunk(
   'reviews/submitReview',
   async ({ bookId, rating, text, token }, { rejectWithValue }) => {
-    const res = await fetch(`http://localhost:4000/api/books/${bookId}/reviews`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ rating, text }),
-    });
-    const data = await res.json();
+    let res;
+    try {
+      res = await fetch(`http://localhost:4000/api/books/${bookId}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ rating, text }),
+      });
+    } catch {
+      return rejectWithValue('Network error. Please try again.');
+    }
+    // generated-by-copilot: auth middleware sends plain-text for 401/403, handle before parsing JSON
+    if (res.status === 401 || res.status === 403) {
+      return rejectWithValue('Your session has expired. Please log in again.');
+    }
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      return rejectWithValue('Failed to submit review');
+    }
     if (!res.ok) {
       return rejectWithValue(data.message || 'Failed to submit review');
     }
@@ -38,15 +52,8 @@ const reviewsSlice = createSlice({
   name: 'reviews',
   initialState: {
     byBookId: {},
-    submitStatus: 'idle',
-    submitError: null,
   },
-  reducers: {
-    resetSubmitStatus: (state) => {
-      state.submitStatus = 'idle';
-      state.submitError = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchReviews.pending, (state, action) => {
@@ -79,24 +86,15 @@ const reviewsSlice = createSlice({
         state.byBookId[bookId].averageRating = averageRating;
         state.byBookId[bookId].count = count;
       })
-      .addCase(submitReview.pending, (state) => {
-        state.submitStatus = 'loading';
-        state.submitError = null;
-      })
+      // generated-by-copilot: update per-book review list on successful submission
       .addCase(submitReview.fulfilled, (state, action) => {
-        state.submitStatus = 'succeeded';
         const { bookId, review } = action.payload;
         if (!state.byBookId[bookId]) {
           state.byBookId[bookId] = { items: [], status: 'idle', averageRating: null, count: 0 };
         }
         state.byBookId[bookId].items.push(review);
-      })
-      .addCase(submitReview.rejected, (state, action) => {
-        state.submitStatus = 'failed';
-        state.submitError = action.payload || 'Failed to submit review';
       });
   },
 });
 
-export const { resetSubmitStatus } = reviewsSlice.actions;
 export default reviewsSlice.reducer;

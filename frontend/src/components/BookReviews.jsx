@@ -4,7 +4,6 @@ import {
   fetchReviews,
   fetchAverageRating,
   submitReview,
-  resetSubmitStatus,
 } from '../store/reviewsSlice';
 import styles from '../styles/BookList.module.css';
 
@@ -48,13 +47,14 @@ const BookReviews = ({ bookId }) => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.user.token);
   const bookData = useAppSelector((state) => state.reviews.byBookId[bookId]);
-  const submitStatus = useAppSelector((state) => state.reviews.submitStatus);
-  const submitError = useAppSelector((state) => state.reviews.submitError);
 
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [text, setText] = useState('');
   const [formError, setFormError] = useState('');
+  // generated-by-copilot: per-card local state so each book card has independent submit status
+  const [submitStatus, setSubmitStatus] = useState('idle');
+  const [submitError, setSubmitError] = useState(null);
 
   const reviews = bookData?.items || [];
   const averageRating = bookData?.averageRating;
@@ -65,7 +65,8 @@ const BookReviews = ({ bookId }) => {
     if (!isOpen) {
       dispatch(fetchReviews(bookId));
       dispatch(fetchAverageRating(bookId));
-      dispatch(resetSubmitStatus());
+      setSubmitStatus('idle');
+      setSubmitError(null);
     }
     setIsOpen((prev) => !prev);
     setFormError('');
@@ -82,11 +83,17 @@ const BookReviews = ({ bookId }) => {
       setFormError('Please enter a review.');
       return;
     }
+    setSubmitStatus('loading');
+    setSubmitError(null);
     const result = await dispatch(submitReview({ bookId, rating, text, token }));
     if (submitReview.fulfilled.match(result)) {
+      setSubmitStatus('succeeded');
       setRating(0);
       setText('');
       dispatch(fetchAverageRating(bookId));
+    } else {
+      setSubmitStatus('failed');
+      setSubmitError(result.payload || 'Failed to submit review');
     }
   };
 
