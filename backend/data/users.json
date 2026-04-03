@@ -2,6 +2,7 @@
   {
     "username": "sandra",
     "password": "sandra",
+    "userType": "administrator",
     "favorites": [
       "1",
       "2",
@@ -19,21 +20,25 @@
   {
     "username": "testuser123",
     "password": "testpass123",
+    "userType": "member",
     "favorites": []
   },
   {
     "username": "e2euser656",
     "password": "e2epass681",
+    "userType": "member",
     "favorites": []
   },
   {
     "username": "e2euser152",
     "password": "e2epass511",
+    "userType": "member",
     "favorites": []
   },
   {
     "username": "e2euser139",
     "password": "e2epass910",
+    "userType": "member",
     "favorites": []
   }
 ]

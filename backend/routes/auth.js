@@ -11,7 +11,8 @@ function createAuthRouter({ usersFile, readJSON, writeJSON, SECRET_KEY }) {
     if (users.find(u => u.username === username)) {
       return res.status(409).json({ message: 'User already exists' });
     }
-    users.push({ username, password, favorites: [] });
+    // generated-by-copilot: new users are assigned the "member" role by default
+    users.push({ username, password, userType: 'member', favorites: [] });
     writeJSON(usersFile, users);
     res.status(201).json({ message: 'User registered' });
   });
@@ -21,8 +22,10 @@ function createAuthRouter({ usersFile, readJSON, writeJSON, SECRET_KEY }) {
     const users = readJSON(usersFile);
     const user = users.find(u => u.username === username && u.password === password);
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
-    res.json({ token });
+    // generated-by-copilot: include userType in JWT payload and response for role-based display
+    const userType = user.userType || 'member';
+    const token = jwt.sign({ username, userType }, SECRET_KEY, { expiresIn: '1h' });
+    res.json({ token, userType });
   });
 
   return router;
