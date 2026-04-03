@@ -1,9 +1,10 @@
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { logout } from '../store/userSlice';
+import { logout, USER_TYPES } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const username = useAppSelector(state => state.user.username);
+  const userType = useAppSelector(state => state.user.userType);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -11,6 +12,14 @@ const Header = () => {
     dispatch(logout());
     navigate('/');
   };
+
+  // generated-by-copilot: visual styles for each user type badge
+  const baseBadgeStyle = { borderRadius: '4px', padding: '0.1rem 0.5rem', fontSize: '0.8rem', marginLeft: '0.4rem', whiteSpace: 'nowrap' };
+  const userTypeBadgeStyle = userType === USER_TYPES.ADMINISTRATOR
+    ? { ...baseBadgeStyle, background: '#ffd700', color: '#333', fontWeight: 700 }
+    : { ...baseBadgeStyle, background: 'rgba(255,255,255,0.25)', color: '#fff', fontWeight: 600 };
+
+  const userTypeLabel = userType === USER_TYPES.ADMINISTRATOR ? 'Administrator' : 'Member';
 
   return (
     <header style={{
@@ -66,7 +75,11 @@ const Header = () => {
               Favorites
             </a>
           </nav>
-          <span style={{ color: '#fff', fontWeight: 600, whiteSpace: 'nowrap', display: 'inline-block' }}>Hi, {username}</span>
+          <span style={{ color: '#fff', fontWeight: 600, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
+            Hi, {username}
+            {/* generated-by-copilot: display user type badge next to username for role clarity */}
+            {userType && <span data-testid="user-type-badge" style={userTypeBadgeStyle}>{userTypeLabel}</span>}
+          </span>
           <button id="logout" onClick={handleLogout} style={{ padding: '0.3rem 1rem', fontSize: '1rem', background: '#fff', color: '#20b2aa', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Logout</button>
         </div>
       )}

@@ -39,6 +39,19 @@ describe('Auth API', () => {
     const res = await request(app).post('/api/login').send(testUser);
     expect(res.statusCode).toBe(200);
     expect(res.body.token).toBeDefined();
+    // generated-by-copilot: verify userType is returned on login
+    expect(res.body.userType).toBeDefined();
+  });
+
+  it('POST /api/register should assign "member" userType by default', async () => {
+    // generated-by-copilot: use a unique username to ensure fresh registration each run
+    const uniqueUser = { username: `typeuser_${Date.now()}`, password: 'pass123' };
+    const regRes = await request(app).post('/api/register').send(uniqueUser);
+    expect(regRes.statusCode).toBe(201);
+    const res = await request(app).post('/api/login').send(uniqueUser);
+    expect(res.statusCode).toBe(200);
+    // generated-by-copilot: new registrations should default to "member"
+    expect(res.body.userType).toBe('member');
   });
 
   it('POST /api/login should fail with wrong password', async () => {

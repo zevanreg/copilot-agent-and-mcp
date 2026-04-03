@@ -21,8 +21,8 @@ const Login = () => {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
-      // Username and token are now stored in Redux and localStorage by setUser
-      dispatch(setUser({ token: data.token, username }));
+      // generated-by-copilot: pass userType from login response to Redux store
+      dispatch(setUser({ token: data.token, username, userType: data.userType }));
       navigate('/favorites');
     } catch (err) {
       setError(err.message);
