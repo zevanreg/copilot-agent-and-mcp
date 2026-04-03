@@ -4,7 +4,20 @@ function createBooksRouter({ booksFile, readJSON, writeJSON, authenticateToken }
   const router = express.Router();
 
   router.get('/', (req, res) => {
-    const books = readJSON(booksFile);
+    let books = readJSON(booksFile);
+    const { sortBy, order } = req.query;
+
+    // generated-by-copilot: sort books by title or author, ascending or descending
+    if (sortBy === 'title' || sortBy === 'author') {
+      books = [...books].sort((a, b) => {
+        const aVal = (a[sortBy] || '').toLowerCase();
+        const bVal = (b[sortBy] || '').toLowerCase();
+        if (aVal < bVal) return order === 'desc' ? 1 : -1;
+        if (aVal > bVal) return order === 'desc' ? -1 : 1;
+        return 0;
+      });
+    }
+
     res.json(books);
   });
 

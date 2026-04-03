@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchBooks } from '../store/booksSlice';
+import { fetchBooks, setSort } from '../store/booksSlice';
 import { addFavorite, fetchFavorites } from '../store/favoritesSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/BookList.module.css';
@@ -10,6 +10,8 @@ const BookList = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector(state => state.books.items);
   const status = useAppSelector(state => state.books.status);
+  const sortBy = useAppSelector(state => state.books.sortBy);
+  const order = useAppSelector(state => state.books.order);
   const token = useAppSelector(state => state.user.token);
   const navigate = useNavigate();
   const favorites = useAppSelector(state => state.favorites.items);
@@ -19,9 +21,9 @@ const BookList = () => {
       navigate('/');
       return;
     }
-    dispatch(fetchBooks());
+    dispatch(fetchBooks({ sortBy, order }));
     dispatch(fetchFavorites(token));
-  }, [dispatch, token, navigate]);
+  }, [dispatch, token, navigate, sortBy, order]);
 
   const handleAddFavorite = async (bookId) => {
     if (!token) {
@@ -32,12 +34,43 @@ const BookList = () => {
     dispatch(fetchFavorites(token));
   };
 
+  // generated-by-copilot: toggle sort field or direction when a sort button is clicked
+  const handleSort = (field) => {
+    if (sortBy === field) {
+      dispatch(setSort({ sortBy: field, order: order === 'asc' ? 'desc' : 'asc' }));
+    } else {
+      dispatch(setSort({ sortBy: field, order: 'asc' }));
+    }
+  };
+
   if (status === 'loading') return <div>Loading...</div>;
   if (status === 'failed') return <div>Failed to load books.</div>;
 
   return (
     <div>
       <h2>Books</h2>
+      {/* generated-by-copilot: sort controls with visual indication of active sort */}
+      <div className={styles.sortControls}>
+        <span className={styles.sortLabel}>Sort by:</span>
+        <button
+          className={`${styles.sortBtn} ${sortBy === 'title' ? styles.sortBtnActive : ''}`}
+          onClick={() => handleSort('title')}
+          aria-pressed={sortBy === 'title'}
+          aria-label={sortBy === 'title' ? `Sort by title, currently ${order === 'asc' ? 'ascending' : 'descending'}` : 'Sort by title'}
+          data-testid="sort-by-title"
+        >
+          Title {sortBy === 'title' && <span aria-hidden="true">{order === 'asc' ? '▲' : '▼'}</span>}
+        </button>
+        <button
+          className={`${styles.sortBtn} ${sortBy === 'author' ? styles.sortBtnActive : ''}`}
+          onClick={() => handleSort('author')}
+          aria-pressed={sortBy === 'author'}
+          aria-label={sortBy === 'author' ? `Sort by author, currently ${order === 'asc' ? 'ascending' : 'descending'}` : 'Sort by author'}
+          data-testid="sort-by-author"
+        >
+          Author {sortBy === 'author' && <span aria-hidden="true">{order === 'asc' ? '▲' : '▼'}</span>}
+        </button>
+      </div>
       {books.length === 0 ? (
         <div style={{
           background: '#fff',
