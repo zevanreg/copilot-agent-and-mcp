@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchBooks, setSort, selectFilteredBooks } from '../store/booksSlice';
+import { fetchBooks, setSort, setCategory, selectFilteredBooks, selectCategories } from '../store/booksSlice';
 import { addFavorite, fetchFavorites } from '../store/favoritesSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/BookList.module.css';
@@ -16,6 +16,8 @@ const BookList = () => {
   const status = useAppSelector(state => state.books.status);
   const sortBy = useAppSelector(state => state.books.sortBy);
   const order = useAppSelector(state => state.books.order);
+  const selectedCategory = useAppSelector(state => state.books.selectedCategory);
+  const categories = useAppSelector(selectCategories);
   const token = useAppSelector(state => state.user.token);
   const navigate = useNavigate();
   const favorites = useAppSelector(state => state.favorites.items);
@@ -25,7 +27,7 @@ const BookList = () => {
       navigate('/');
       return;
     }
-    dispatch(fetchBooks({ sortBy, order }));
+    dispatch(fetchBooks({ sortBy, order, category: selectedCategory }));
     dispatch(fetchFavorites(token));
   }, [dispatch, token, navigate, sortBy, order]);
 
@@ -36,6 +38,12 @@ const BookList = () => {
     }
     await dispatch(addFavorite({ token, bookId }));
     dispatch(fetchFavorites(token));
+  };
+
+  // generated-by-copilot: set category filter and re-fetch books with the new category
+  const handleCategory = (cat) => {
+    dispatch(setCategory(cat));
+    dispatch(fetchBooks({ sortBy, order, category: cat }));
   };
 
   // generated-by-copilot: toggle sort field or direction when a sort button is clicked
@@ -55,6 +63,29 @@ const BookList = () => {
       <h2>Books</h2>
       {/* generated-by-copilot: search input for real-time filtering */}
       <SearchInput />
+      {/* generated-by-copilot: category filter buttons for filtering books by genre */}
+      <div className={styles.categoryControls} data-testid="category-filter">
+        <span className={styles.sortLabel}>Category:</span>
+        <button
+          className={`${styles.categoryBtn} ${selectedCategory === '' ? styles.categoryBtnActive : ''}`}
+          onClick={() => handleCategory('')}
+          aria-pressed={selectedCategory === ''}
+          data-testid="category-all"
+        >
+          All Categories
+        </button>
+        {categories.map(cat => (
+          <button
+            key={cat}
+            className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
+            onClick={() => handleCategory(cat)}
+            aria-pressed={selectedCategory === cat}
+            data-testid={`category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
       {/* generated-by-copilot: sort controls with visual indication of active sort */}
       <div className={styles.sortControls}>
         <span className={styles.sortLabel}>Sort by:</span>
@@ -93,6 +124,8 @@ const BookList = () => {
               <p>No books available.</p>
               <p>Check back later or add a new book if you have permission.</p>
             </>
+          ) : selectedCategory ? (
+            <p>No books found in this category.</p>
           ) : (
             <p>No books match your search.</p>
           )}

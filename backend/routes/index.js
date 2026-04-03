@@ -12,6 +12,13 @@ function createApiRouter(deps) {
   router.use('/books', createReviewsRouter(deps));
   router.use('/favorites', createFavoritesRouter(deps));
 
+  // generated-by-copilot: return sorted unique categories derived from book data
+  router.get('/categories', (req, res) => {
+    const books = deps.readJSON(deps.booksFile);
+    const categories = [...new Set(books.map(b => b.category).filter(Boolean))].sort();
+    res.json(categories);
+  });
+
   return router;
 }
 

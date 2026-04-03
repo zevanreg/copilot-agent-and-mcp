@@ -75,4 +75,60 @@ describe('Books API', () => {
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
+
+  // generated-by-copilot: category filtering tests
+  it('GET /api/books?category=Fantasy should return only Fantasy books', async () => {
+    const res = await request(app).get('/api/books?category=Fantasy');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+    res.body.forEach(b => expect(b.category).toBe('Fantasy'));
+  });
+
+  it('GET /api/books?category=fantasy (lowercase) should still match Fantasy books', async () => {
+    const res = await request(app).get('/api/books?category=fantasy');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+    res.body.forEach(b => expect(b.category.toLowerCase()).toBe('fantasy'));
+  });
+
+  it('GET /api/books?category=Unknown should return an empty array', async () => {
+    const res = await request(app).get('/api/books?category=Unknown');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body).toHaveLength(0);
+  });
+
+  it('GET /api/books?category=Classic&sortBy=title&order=asc should return filtered and sorted results', async () => {
+    const res = await request(app).get('/api/books?category=Classic&sortBy=title&order=asc');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+    res.body.forEach(b => expect(b.category).toBe('Classic'));
+    const titles = res.body.map(b => b.title.toLowerCase());
+    for (let i = 0; i < titles.length - 1; i++) {
+      expect(titles[i] <= titles[i + 1]).toBe(true);
+    }
+  });
+
+  // generated-by-copilot: categories endpoint tests
+  it('GET /api/categories should return a sorted array of unique categories', async () => {
+    const res = await request(app).get('/api/categories');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+    // all strings
+    res.body.forEach(c => expect(typeof c).toBe('string'));
+    // sorted
+    const sorted = [...res.body].sort();
+    expect(res.body).toEqual(sorted);
+    // unique
+    const unique = [...new Set(res.body)];
+    expect(res.body).toEqual(unique);
+    // known categories are present
+    expect(res.body).toContain('Classic');
+    expect(res.body).toContain('Fantasy');
+    expect(res.body).toContain('Science Fiction');
+  });
 });

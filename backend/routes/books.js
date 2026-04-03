@@ -5,7 +5,12 @@ function createBooksRouter({ booksFile, readJSON, writeJSON, authenticateToken }
 
   router.get('/', (req, res) => {
     let books = readJSON(booksFile);
-    const { sortBy, order } = req.query;
+    const { sortBy, order, category } = req.query;
+
+    // generated-by-copilot: filter books by category (case-insensitive) when provided
+    if (category) {
+      books = books.filter(b => (b.category || '').toLowerCase() === category.toLowerCase());
+    }
 
     // generated-by-copilot: sort books by title or author, ascending or descending
     if (sortBy === 'title' || sortBy === 'author') {

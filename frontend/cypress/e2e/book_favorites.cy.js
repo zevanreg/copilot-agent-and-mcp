@@ -91,4 +91,63 @@ describe('Book Favorites App', () => {
     cy.get('[data-testid="sort-by-title"]').click();
     cy.get('[data-testid="sort-by-title"]').should('have.attr', 'aria-pressed', 'true');
   });
+
+  // generated-by-copilot: category filter E2E tests
+  it('should show the category filter after login', () => {
+    cy.contains('Login').click();
+    cy.get('input[name="username"]').type(user.username);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button#login').click();
+    cy.contains('Books').click();
+    cy.get('[data-testid="category-filter"]').should('be.visible');
+    cy.get('[data-testid="category-all"]').should('be.visible');
+  });
+
+  it('should filter books by category', () => {
+    cy.contains('Login').click();
+    cy.get('input[name="username"]').type(user.username);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button#login').click();
+    cy.contains('Books').click();
+    cy.get('[data-testid="category-filter"]').should('be.visible');
+
+    // Click the Fantasy category button
+    cy.get('[data-testid="category-fantasy"]').click();
+    cy.get('[data-testid="category-fantasy"]').should('have.attr', 'aria-pressed', 'true');
+
+    // All visible book cards should show Fantasy books (The Hobbit and The Lord of the Rings)
+    cy.get('[data-testid="category-fantasy"]').should('have.attr', 'aria-pressed', 'true');
+    cy.get('[data-testid="category-all"]').should('have.attr', 'aria-pressed', 'false');
+  });
+
+  it('should restore all books when All Categories is selected', () => {
+    cy.contains('Login').click();
+    cy.get('input[name="username"]').type(user.username);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button#login').click();
+    cy.contains('Books').click();
+
+    // Filter by Fantasy first
+    cy.get('[data-testid="category-fantasy"]').click();
+    cy.get('[data-testid="category-fantasy"]').should('have.attr', 'aria-pressed', 'true');
+
+    // Reset to All Categories
+    cy.get('[data-testid="category-all"]').click();
+    cy.get('[data-testid="category-all"]').should('have.attr', 'aria-pressed', 'true');
+    cy.get('[data-testid="category-fantasy"]').should('have.attr', 'aria-pressed', 'false');
+  });
+
+  it('should combine category filter and search input', () => {
+    cy.contains('Login').click();
+    cy.get('input[name="username"]').type(user.username);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button#login').click();
+    cy.contains('Books').click();
+
+    // Select Classic category then search for a specific title
+    cy.get('[data-testid="category-classic"]').click();
+    cy.get('input[placeholder]').first().type('1984');
+    // 1984 is Science Fiction, not Classic – so no results
+    cy.contains('No books found in this category.').should('exist');
+  });
 });
