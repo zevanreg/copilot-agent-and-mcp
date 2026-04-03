@@ -2,256 +2,307 @@
   {
     "id": "1",
     "title": "To Kill a Mockingbird",
-    "author": "Harper Lee"
+    "author": "Harper Lee",
+    "category": "Fiction"
   },
   {
     "id": "2",
     "title": "1984",
-    "author": "George Orwell"
+    "author": "George Orwell",
+    "category": "Science Fiction"
   },
   {
     "id": "3",
     "title": "Pride and Prejudice",
-    "author": "Jane Austen"
+    "author": "Jane Austen",
+    "category": "Classic"
   },
   {
     "id": "4",
     "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald"
+    "author": "F. Scott Fitzgerald",
+    "category": "Fiction"
   },
   {
     "id": "5",
     "title": "Moby-Dick",
-    "author": "Herman Melville"
+    "author": "Herman Melville",
+    "category": "Classic"
   },
   {
     "id": "6",
     "title": "War and Peace",
-    "author": "Leo Tolstoy"
+    "author": "Leo Tolstoy",
+    "category": "Historical Fiction"
   },
   {
     "id": "7",
     "title": "The Catcher in the Rye",
-    "author": "J.D. Salinger"
+    "author": "J.D. Salinger",
+    "category": "Fiction"
   },
   {
     "id": "8",
     "title": "The Hobbit",
-    "author": "J.R.R. Tolkien"
+    "author": "J.R.R. Tolkien",
+    "category": "Fantasy"
   },
   {
     "id": "9",
     "title": "Brave New World",
-    "author": "Aldous Huxley"
+    "author": "Aldous Huxley",
+    "category": "Science Fiction"
   },
   {
     "id": "10",
     "title": "Crime and Punishment",
-    "author": "Fyodor Dostoevsky"
+    "author": "Fyodor Dostoevsky",
+    "category": "Classic"
   },
   {
     "id": "11",
     "title": "The Odyssey",
-    "author": "Homer"
+    "author": "Homer",
+    "category": "Classic"
   },
   {
     "id": "12",
     "title": "The Brothers Karamazov",
-    "author": "Fyodor Dostoevsky"
+    "author": "Fyodor Dostoevsky",
+    "category": "Classic"
   },
   {
     "id": "13",
     "title": "Wuthering Heights",
-    "author": "Emily Brontë"
+    "author": "Emily Brontë",
+    "category": "Classic"
   },
   {
     "id": "14",
     "title": "Jane Eyre",
-    "author": "Charlotte Brontë"
+    "author": "Charlotte Brontë",
+    "category": "Classic"
   },
   {
     "id": "15",
     "title": "The Divine Comedy",
-    "author": "Dante Alighieri"
+    "author": "Dante Alighieri",
+    "category": "Classic"
   },
   {
     "id": "16",
     "title": "The Lord of the Rings",
-    "author": "J.R.R. Tolkien"
+    "author": "J.R.R. Tolkien",
+    "category": "Fantasy"
   },
   {
     "id": "17",
     "title": "Great Expectations",
-    "author": "Charles Dickens"
+    "author": "Charles Dickens",
+    "category": "Classic"
   },
   {
     "id": "18",
     "title": "Anna Karenina",
-    "author": "Leo Tolstoy"
+    "author": "Leo Tolstoy",
+    "category": "Classic"
   },
   {
     "id": "19",
     "title": "Don Quixote",
-    "author": "Miguel de Cervantes"
+    "author": "Miguel de Cervantes",
+    "category": "Classic"
   },
   {
     "id": "20",
     "title": "The Grapes of Wrath",
-    "author": "John Steinbeck"
+    "author": "John Steinbeck",
+    "category": "Fiction"
   },
   {
     "id": "21",
     "title": "Ulysses",
-    "author": "James Joyce"
+    "author": "James Joyce",
+    "category": "Fiction"
   },
   {
     "id": "22",
     "title": "Madame Bovary",
-    "author": "Gustave Flaubert"
+    "author": "Gustave Flaubert",
+    "category": "Classic"
   },
   {
     "id": "23",
     "title": "The Iliad",
-    "author": "Homer"
+    "author": "Homer",
+    "category": "Classic"
   },
   {
     "id": "24",
     "title": "Les Misérables",
-    "author": "Victor Hugo"
+    "author": "Victor Hugo",
+    "category": "Historical Fiction"
   },
   {
     "id": "25",
     "title": "A Tale of Two Cities",
-    "author": "Charles Dickens"
+    "author": "Charles Dickens",
+    "category": "Historical Fiction"
   },
   {
     "id": "26",
     "title": "Fahrenheit 451",
-    "author": "Ray Bradbury"
+    "author": "Ray Bradbury",
+    "category": "Science Fiction"
   },
   {
     "id": "27",
     "title": "Dracula",
-    "author": "Bram Stoker"
+    "author": "Bram Stoker",
+    "category": "Horror"
   },
   {
     "id": "28",
     "title": "Frankenstein",
-    "author": "Mary Shelley"
+    "author": "Mary Shelley",
+    "category": "Horror"
   },
   {
     "id": "29",
     "title": "The Sun Also Rises",
-    "author": "Ernest Hemingway"
+    "author": "Ernest Hemingway",
+    "category": "Fiction"
   },
   {
     "id": "30",
     "title": "The Picture of Dorian Gray",
-    "author": "Oscar Wilde"
+    "author": "Oscar Wilde",
+    "category": "Classic"
   },
   {
     "id": "31",
     "title": "The Count of Monte Cristo",
-    "author": "Alexandre Dumas"
+    "author": "Alexandre Dumas",
+    "category": "Historical Fiction"
   },
   {
     "id": "32",
     "title": "The Old Man and the Sea",
-    "author": "Ernest Hemingway"
+    "author": "Ernest Hemingway",
+    "category": "Fiction"
   },
   {
     "id": "33",
     "title": "Lolita",
-    "author": "Vladimir Nabokov"
+    "author": "Vladimir Nabokov",
+    "category": "Fiction"
   },
   {
     "id": "34",
     "title": "Catch-22",
-    "author": "Joseph Heller"
+    "author": "Joseph Heller",
+    "category": "Fiction"
   },
   {
     "id": "35",
     "title": "The Stranger",
-    "author": "Albert Camus"
+    "author": "Albert Camus",
+    "category": "Fiction"
   },
   {
     "id": "36",
     "title": "Rebecca",
-    "author": "Daphne du Maurier"
+    "author": "Daphne du Maurier",
+    "category": "Mystery"
   },
   {
     "id": "37",
     "title": "The Sound and the Fury",
-    "author": "William Faulkner"
+    "author": "William Faulkner",
+    "category": "Fiction"
   },
   {
     "id": "38",
     "title": "David Copperfield",
-    "author": "Charles Dickens"
+    "author": "Charles Dickens",
+    "category": "Classic"
   },
   {
     "id": "39",
     "title": "Gone with the Wind",
-    "author": "Margaret Mitchell"
+    "author": "Margaret Mitchell",
+    "category": "Historical Fiction"
   },
   {
     "id": "40",
     "title": "The Scarlet Letter",
-    "author": "Nathaniel Hawthorne"
+    "author": "Nathaniel Hawthorne",
+    "category": "Classic"
   },
   {
     "id": "41",
     "title": "Persuasion",
-    "author": "Jane Austen"
+    "author": "Jane Austen",
+    "category": "Classic"
   },
   {
     "id": "42",
     "title": "Emma",
-    "author": "Jane Austen"
+    "author": "Jane Austen",
+    "category": "Classic"
   },
   {
     "id": "43",
     "title": "Sense and Sensibility",
-    "author": "Jane Austen"
+    "author": "Jane Austen",
+    "category": "Classic"
   },
   {
     "id": "44",
     "title": "The Alchemist",
-    "author": "Paulo Coelho"
+    "author": "Paulo Coelho",
+    "category": "Fiction"
   },
   {
     "id": "45",
     "title": "The Kite Runner",
-    "author": "Khaled Hosseini"
+    "author": "Khaled Hosseini",
+    "category": "Fiction"
   },
   {
     "id": "46",
     "title": "Life of Pi",
-    "author": "Yann Martel"
+    "author": "Yann Martel",
+    "category": "Fiction"
   },
   {
     "id": "47",
     "title": "Slaughterhouse-Five",
-    "author": "Kurt Vonnegut"
+    "author": "Kurt Vonnegut",
+    "category": "Science Fiction"
   },
   {
     "id": "48",
     "title": "Beloved",
-    "author": "Toni Morrison"
+    "author": "Toni Morrison",
+    "category": "Fiction"
   },
   {
     "id": "49",
     "title": "The Road",
-    "author": "Cormac McCarthy"
+    "author": "Cormac McCarthy",
+    "category": "Fiction"
   },
   {
     "id": "50",
     "title": "The Secret Garden",
-    "author": "Frances Hodgson Burnett"
+    "author": "Frances Hodgson Burnett",
+    "category": "Classic"
   },
   {
     "id": "1749802373204",
     "title": "Test Book",
-    "author": "Test Author"
+    "author": "Test Author",
+    "category": "Fiction"
   }
 ]

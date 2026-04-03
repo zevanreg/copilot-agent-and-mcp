@@ -6,6 +6,15 @@
   margin-bottom: 1rem;
 }
 
+/* generated-by-copilot: category filter controls layout */
+.categoryControls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 .sortLabel {
   font-size: 0.95rem;
   color: #555;
@@ -37,6 +46,37 @@
 }
 
 .sortBtnActive:hover {
+  background: #178d8d;
+  border-color: #178d8d;
+  color: #fff;
+}
+
+/* generated-by-copilot: category filter button styles, matching sort button appearance */
+.categoryBtn {
+  background: #f0f0f0;
+  color: #333;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.categoryBtn:hover {
+  background: #e0f5f4;
+  border-color: #20b2aa;
+  color: #20b2aa;
+}
+
+.categoryBtnActive {
+  background: #20b2aa;
+  color: #fff;
+  border-color: #20b2aa;
+  font-weight: 600;
+}
+
+.categoryBtnActive:hover {
   background: #178d8d;
   border-color: #178d8d;
   color: #fff;

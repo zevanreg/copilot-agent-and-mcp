@@ -7,6 +7,10 @@
       "args": [
         "/path-to/github-copilot-agent/book-database/build/index.js"
       ]
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
     }
   }
 }
