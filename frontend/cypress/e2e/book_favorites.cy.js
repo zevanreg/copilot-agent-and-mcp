@@ -64,4 +64,31 @@ describe('Book Favorites App', () => {
     cy.get('button#clear-all-favorites').click();
     cy.contains('No favorite books yet.').should('exist');
   });
+
+  it('should sort books by title and author', () => {
+    // Login first
+    cy.contains('Login').click();
+    cy.get('input[name="username"]').type(user.username);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button#login').click();
+    cy.contains('Books').click();
+    cy.contains('h2', 'Books').should('exist');
+
+    // generated-by-copilot: verify sort by title ascending (default)
+    cy.get('[data-testid="sort-by-title"]').should('have.attr', 'aria-pressed', 'true');
+    cy.get('[data-testid="sort-by-title"]').should('contain', '▲');
+
+    // Sort by author ascending
+    cy.get('[data-testid="sort-by-author"]').click();
+    cy.get('[data-testid="sort-by-author"]').should('have.attr', 'aria-pressed', 'true');
+    cy.get('[data-testid="sort-by-author"]').should('contain', '▲');
+
+    // Toggle author to descending
+    cy.get('[data-testid="sort-by-author"]').click();
+    cy.get('[data-testid="sort-by-author"]').should('contain', '▼');
+
+    // Switch back to title
+    cy.get('[data-testid="sort-by-title"]').click();
+    cy.get('[data-testid="sort-by-title"]').should('have.attr', 'aria-pressed', 'true');
+  });
 });

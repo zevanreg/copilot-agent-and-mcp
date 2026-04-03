@@ -1,3 +1,47 @@
+/* generated-by-copilot: sort controls layout */
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sortLabel {
+  font-size: 0.95rem;
+  color: #555;
+  margin-right: 0.25rem;
+}
+
+.sortBtn {
+  background: #f0f0f0;
+  color: #333;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.sortBtn:hover {
+  background: #e0f5f4;
+  border-color: #20b2aa;
+  color: #20b2aa;
+}
+
+.sortBtnActive {
+  background: #20b2aa;
+  color: #fff;
+  border-color: #20b2aa;
+  font-weight: 600;
+}
+
+.sortBtnActive:hover {
+  background: #178d8d;
+  border-color: #178d8d;
+  color: #fff;
+}
+
 .bookCardWithHeart {
   position: relative;
 }
