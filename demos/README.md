@@ -27,6 +27,7 @@ Everything is descripted step by step before each exercise.
 ## Part 3: GitHub Copilot Cloud Agent with MCP
 
 - [Demo 4: Using GitHub Copilot Cloud Agent with MCP to fix a security alert](12-coding-agent-advanced.md)
+- [Demo 6: Using GitHub Copilot Cloud Agent with hooks to log session start](14-coding-agent-hooks.md)
 
 ## Part 4: GitHub Copilot Chat in Agent Mode with MCP
 
