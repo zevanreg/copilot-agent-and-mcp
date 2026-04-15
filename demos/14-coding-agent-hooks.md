@@ -73,9 +73,10 @@ git push
 ### Step 3 — Start a Copilot agent session
 
 1. Open your repository on GitHub.
-2. Start a new Copilot agent session (e.g., via GitHub Copilot Workspace or the cloud agent interface).
-3. The `sessionStart` hook fires automatically and logs the session start time to `logs/session.log`.
-4. Verify the output in the `logs/session.log` file.
+2. Make sure the `logs/session.log` file exists (create an empty file if needed) and is writable.
+3. Start a new Copilot agent session (e.g., via GitHub Copilot Workspace or the cloud agent interface) and ask "what's the latest version of dotnet?"
+4. The `sessionStart` hook fires automatically and logs the session start time to `logs/session.log`.
+5. Verify the output in the `logs/session.log` file.
 
 ## Troubleshooting
 
