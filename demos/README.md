@@ -33,3 +33,7 @@ Everything is descripted step by step before each exercise.
 ## Part 4: GitHub Copilot Chat in Agent Mode with MCP
 
 - [Demo 5: Using GitHub Copilot Chat in Agent Mode to add a (medium) new feature](13-agent-mode-advanced.md)
+
+## Part 5: GitHub Copilot CLI
+
+- [Demo 8: Using GitHub Copilot CLI on local terminal](16-copilot-cli.md)

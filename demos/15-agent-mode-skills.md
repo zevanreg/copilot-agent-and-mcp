@@ -42,8 +42,7 @@ Tell the audience that the skill should:
 
 1. Go to your IDE.
 2. Open GitHub Copilot Chat in Agent Mode.
-3. Add the entire codebase (`#codebase`) to context.
-4. Mention that we will generate the skill from a prompt, not by manually writing all files.
+3. Go to step 3.
 
 ### Step 3 - Create the skill with `/create-skill`
 
@@ -51,7 +50,7 @@ Use the following prompt in Agent Mode:
 
 ```prompt
 /create-skill Create a skill named resize-images.
-The skill should use Python and Pillow to resize images into large, medium, small, and thumbnail variants.
+The skill should use only Python and Pillow to resize images into large, medium, small, and thumbnail variants.
 Requirements:
 - Create .github/skills/resize-images/SKILL.md
 - Create .github/skills/resize-images/resize_images.py
