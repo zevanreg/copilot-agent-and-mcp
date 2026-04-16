@@ -84,3 +84,43 @@ Everything is descripted step by step before each exercise.
    - Creates well-structured issues
    - Handles the implementation
    - Adds necessary tests
+
+## Part 3: GitHub Copilot CLI (15-20 minutes)
+
+> Detailed instructions: [03-copilot-cli-exercises.md](./03-copilot-cli-exercises.md)
+
+### Exercise 6: Install and Authenticate GitHub Copilot CLI
+
+1. Install the CLI via npm, WinGet, or Homebrew
+2. Start an interactive session and authenticate with GitHub
+3. Run a warm-up question to confirm the CLI is reading the repository
+
+### Exercise 7: Explore the Codebase
+
+1. Use the CLI to trace the JWT authentication flow end-to-end
+2. Ask about the favorites feature and its data flow
+3. Try non-interactive mode (`-p`, `-s`) and file attachment with `@`
+
+### Exercise 8: Add a Feature Using Plan Mode
+
+1. Use **Shift+Tab** to activate plan mode
+2. Prompt Copilot to add a `/books/search` endpoint and tests
+3. Review the generated plan before approving
+4. Let Copilot implement the feature and run the test suite
+
+### Exercise 9 (Optional): Work IQ — Surface M365 Context
+
+> Requires Microsoft 365 with Copilot enabled.
+
+1. Install the Work IQ plugin via `/plugin install`
+2. Query your calendar, emails, and Teams messages from the terminal
+3. Combine M365 context with codebase reasoning in a single session
+
+### Exercise 10 (Optional): Deploy to Azure with /fleet + Azure MCP Server
+
+> Requires an active Azure subscription.
+
+1. Register the Azure MCP Server with `/mcp add`
+2. Query your existing Azure resources
+3. Use `/fleet` to deploy the backend to Azure App Service
+4. Verify the deployment and clean up resources
