@@ -5,11 +5,12 @@ export const fetchFavorites = createAsyncThunk('favorites/fetchFavorites', async
   const res = await fetch(apiUrl('/favorites'), {
     headers: { Authorization: `Bearer ${token}` },
   });
+  if (!res.ok) throw new Error('Failed to fetch favorites');
   return res.json();
 });
 
 export const addFavorite = createAsyncThunk('favorites/addFavorite', async ({ token, bookId }) => {
-  await fetch(apiUrl('/favorites'), {
+  const res = await fetch(apiUrl('/favorites'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,6 +18,7 @@ export const addFavorite = createAsyncThunk('favorites/addFavorite', async ({ to
     },
     body: JSON.stringify({ bookId }),
   });
+  if (!res.ok) throw new Error('Failed to add favorite');
   return bookId;
 });
 
@@ -31,6 +33,23 @@ export const removeFavorite = createAsyncThunk('favorites/removeFavorite', async
   if (!res.ok) throw new Error('Failed to remove favorite');
   return bookId;
 });
+
+export const updateFavoriteComment = createAsyncThunk(
+  'favorites/updateFavoriteComment',
+  async ({ token, bookId, comment }) => {
+    const res = await fetch(apiUrl(`/favorites/${bookId}`), {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ comment }),
+    });
+    if (!res.ok) throw new Error('Failed to update favorite comment');
+    const data = await res.json();
+    return { bookId, comment: data.comment };
+  }
+);
 
 const favoritesSlice = createSlice({
   name: 'favorites',
@@ -50,6 +69,13 @@ const favoritesSlice = createSlice({
       // generated-by-copilot: remove the book from items immediately for a responsive UI
       .addCase(removeFavorite.fulfilled, (state, action) => {
         state.items = state.items.filter(book => book.id !== action.payload);
+      })
+      .addCase(updateFavoriteComment.fulfilled, (state, action) => {
+        state.items = state.items.map(book => (
+          book.id === action.payload.bookId
+            ? { ...book, comment: action.payload.comment }
+            : book
+        ));
       });
   },
 });

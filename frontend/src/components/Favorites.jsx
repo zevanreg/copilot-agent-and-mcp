@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchFavorites, removeFavorite } from '../store/favoritesSlice';
+import { fetchFavorites, removeFavorite, updateFavoriteComment } from '../store/favoritesSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/BookList.module.css';
 
@@ -10,6 +10,8 @@ const Favorites = () => {
   const status = useAppSelector(state => state.favorites.status);
   const token = useAppSelector(state => state.user.token);
   const navigate = useNavigate();
+  const [draftComments, setDraftComments] = useState({});
+  const [savingBookId, setSavingBookId] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -19,11 +21,33 @@ const Favorites = () => {
     dispatch(fetchFavorites(token));
   }, [dispatch, token, navigate]);
 
+  useEffect(() => {
+    setDraftComments(
+      favorites.reduce((commentsByBookId, book) => {
+        commentsByBookId[book.id] = book.comment || '';
+        return commentsByBookId;
+      }, {})
+    );
+  }, [favorites]);
+
   // generated-by-copilot: handle removal with a confirmation dialog
   const handleRemoveFavorite = (bookId, bookTitle) => {
     if (window.confirm(`Remove "${bookTitle}" from your favorites?`)) {
       dispatch(removeFavorite({ token, bookId }));
     }
+  };
+
+  const handleCommentChange = (bookId, comment) => {
+    setDraftComments(currentComments => ({
+      ...currentComments,
+      [bookId]: comment,
+    }));
+  };
+
+  const handleSaveComment = async (bookId) => {
+    setSavingBookId(bookId);
+    await dispatch(updateFavoriteComment({ token, bookId, comment: draftComments[bookId] || '' }));
+    setSavingBookId(null);
   };
 
   if (status === 'loading') return <div>Loading...</div>;
@@ -54,6 +78,26 @@ const Favorites = () => {
             <div className={styles.bookCard} key={book.id}>
               <div className={styles.bookTitle}>{book.title}</div>
               <div className={styles.bookAuthor}>by {book.author}</div>
+              <label className={styles.favoriteCommentLabel} htmlFor={`favorite-comment-${book.id}`}>
+                Your comment
+              </label>
+              <textarea
+                id={`favorite-comment-${book.id}`}
+                className={styles.favoriteCommentInput}
+                value={draftComments[book.id] || ''}
+                onChange={event => handleCommentChange(book.id, event.target.value)}
+                rows={3}
+                placeholder="Add a note about why this is a favorite"
+              />
+              <div className={styles.favoriteCommentActions}>
+                <button
+                  className={styles.simpleBtn}
+                  onClick={() => handleSaveComment(book.id)}
+                  disabled={savingBookId === book.id || (draftComments[book.id] || '') === (book.comment || '')}
+                >
+                  {savingBookId === book.id ? 'Saving...' : 'Save Comment'}
+                </button>
+              </div>
               {/* generated-by-copilot: trash icon button for removing a favorite */}
               <button
                 className={styles.trashBtn}
