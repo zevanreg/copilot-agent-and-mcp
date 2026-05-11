@@ -133,3 +133,26 @@
   box-shadow: none !important;
   background: none !important;
 }
+
+/* generated-by-copilot: trash icon button for removing a favorite */
+.trashBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  margin-top: auto;
+  align-self: flex-end;
+  color: #bbb;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s, background 0.2s;
+}
+.trashBtn:hover {
+  color: #e25555;
+  background: #ffeaea;
+}
+.trashBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #e25555;
+}
