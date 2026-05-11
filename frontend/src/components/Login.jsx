@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAppDispatch } from '../store/hooks';
 import { setUser } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { apiUrl } from '../api';
 
 const Login = () => {
@@ -34,6 +35,9 @@ const Login = () => {
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
+      <p style={{ marginTop: 0, color: '#555' }}>
+        Use the seeded account <strong>sandra</strong>/<strong>sandra</strong> or <Link to="/register">create a new account</Link> first.
+      </p>
       <input
         name="username"
         type="text"
