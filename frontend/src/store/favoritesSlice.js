@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { apiUrl } from '../api';
 
 export const fetchFavorites = createAsyncThunk('favorites/fetchFavorites', async (token) => {
-  const res = await fetch('http://localhost:4000/api/favorites', {
+  const res = await fetch(apiUrl('/favorites'), {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.json();
 });
 
 export const addFavorite = createAsyncThunk('favorites/addFavorite', async ({ token, bookId }) => {
-  await fetch('http://localhost:4000/api/favorites', {
+  await fetch(apiUrl('/favorites'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
