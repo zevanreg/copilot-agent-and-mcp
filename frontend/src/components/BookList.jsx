@@ -33,12 +33,12 @@ const BookList = () => {
   };
 
   // generated-by-copilot: dispatch removeFavorite with optimistic UI update
-  const handleRemoveFavorite = (bookId) => {
+  const handleRemoveFavorite = async (bookId) => {
     if (!token) {
       navigate('/');
       return;
     }
-    dispatch(removeFavorite({ token, bookId }));
+    await dispatch(removeFavorite({ token, bookId }));
   };
 
   if (status === 'loading') return <div>Loading...</div>;

@@ -33,7 +33,7 @@ export const removeFavorite = createAsyncThunk('favorites/removeFavorite', async
 
 const favoritesSlice = createSlice({
   name: 'favorites',
-  initialState: { items: [], status: 'idle', removeError: null, _removedItem: null },
+  initialState: { items: [], status: 'idle', removeError: null, _removedItem: null, _removedIndex: -1 },
   reducers: {},
   extraReducers: builder => {
     builder
@@ -46,22 +46,27 @@ const favoritesSlice = createSlice({
       .addCase(addFavorite.fulfilled, (state, action) => {
         // After adding, fetch the updated favorites list to ensure UI is in sync
       })
-      // generated-by-copilot: optimistic removal — stash removed item for rollback on failure
+      // generated-by-copilot: optimistic removal — stash removed item and its index for position-accurate rollback
       .addCase(removeFavorite.pending, (state, action) => {
         state.removeError = null;
         const bookId = action.meta.arg.bookId;
-        state._removedItem = state.items.find(b => b.id === bookId) || null;
+        const index = state.items.findIndex(b => b.id === bookId);
+        state._removedItem = index !== -1 ? state.items[index] : null;
+        state._removedIndex = index;
         state.items = state.items.filter(b => b.id !== bookId);
       })
       .addCase(removeFavorite.fulfilled, (state) => {
         state.removeError = null;
         state._removedItem = null;
+        state._removedIndex = -1;
       })
       .addCase(removeFavorite.rejected, (state) => {
-        // Rollback: restore the item that was optimistically removed
+        // Rollback: restore the item at its original position
         if (state._removedItem) {
-          state.items = [...state.items, state._removedItem];
+          const idx = state._removedIndex >= 0 ? state._removedIndex : state.items.length;
+          state.items.splice(idx, 0, state._removedItem);
           state._removedItem = null;
+          state._removedIndex = -1;
         }
         state.removeError = 'Failed to remove favorite. Please try again.';
       });
