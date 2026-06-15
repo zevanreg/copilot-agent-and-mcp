@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchBooks } from '../store/booksSlice';
-import { addFavorite, fetchFavorites } from '../store/favoritesSlice';
+import { addFavorite, fetchFavorites, removeFavorite } from '../store/favoritesSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/BookList.module.css';
 
@@ -30,6 +30,15 @@ const BookList = () => {
     }
     await dispatch(addFavorite({ token, bookId }));
     dispatch(fetchFavorites(token));
+  };
+
+  // generated-by-copilot: dispatch removeFavorite with optimistic UI update
+  const handleRemoveFavorite = (bookId) => {
+    if (!token) {
+      navigate('/');
+      return;
+    }
+    dispatch(removeFavorite({ token, bookId }));
   };
 
   if (status === 'loading') return <div>Loading...</div>;
@@ -67,11 +76,13 @@ const BookList = () => {
                 )}
                 <div className={styles.bookTitle}>{book.title}</div>
                 <div className={styles.bookAuthor}>by {book.author}</div>
+                {/* generated-by-copilot: toggle add/remove favorite from book list */}
                 <button
                   className={styles.simpleBtn}
-                  onClick={() => handleAddFavorite(book.id)}
+                  onClick={() => isFavorite ? handleRemoveFavorite(book.id) : handleAddFavorite(book.id)}
+                  aria-label={isFavorite ? `Remove ${book.title} from favorites` : `Add ${book.title} to favorites`}
                 >
-                  {isFavorite ? 'In Favorites' : 'Add to Favorites'}
+                  {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
                 </button>
               </div>
             );
