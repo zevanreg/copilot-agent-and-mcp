@@ -1,0 +1,62 @@
+/* generated-by-copilot: styles for the Favorites page list and trash remove button */
+.favoritesList {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  max-width: 640px;
+}
+
+.favoriteItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.bookInfo {
+  flex: 1;
+  font-size: 1rem;
+  color: #333;
+}
+
+.trashBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.trashBtn:hover {
+  color: #e25555;
+  background: #fef2f2;
+}
+
+.trashBtn:focus-visible {
+  outline: 2px solid #e25555;
+  outline-offset: 2px;
+}
+
+.removeError {
+  background: #fef2f2;
+  color: #c0392b;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  max-width: 640px;
+  font-size: 0.95rem;
+}

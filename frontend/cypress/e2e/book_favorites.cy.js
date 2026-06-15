@@ -36,6 +36,25 @@ describe('Book Favorites App', () => {
     cy.get('h2').contains('My Favorite Books').should('exist');
   });
 
+  // generated-by-copilot: verify a book can be removed from the favorites list using the trash icon
+  it('should allow removing a book from the favorites list', () => {
+    // Login first
+    cy.contains('Login').click();
+    cy.get('input[name="username"]').type(user.username);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button#login').click();
+    // Go to favorites page (book was added in previous test)
+    cy.get('a#favorites-link').click();
+    cy.get('h2').contains('My Favorite Books').should('exist');
+    // Record the title of the first favorite before removing it
+    cy.get('li').first().find('strong').invoke('text').then((title) => {
+      // Click the trash icon on that first favorite
+      cy.get('li').first().find('button[aria-label^="Remove"]').click();
+      // That specific book should no longer appear in the list
+      cy.contains('strong', title).should('not.exist');
+    });
+  });
+
   it('should logout and protect routes', () => {
     // Login first
     cy.contains('Login').click();
