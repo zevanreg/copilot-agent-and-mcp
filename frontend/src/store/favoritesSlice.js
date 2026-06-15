@@ -33,7 +33,7 @@ export const removeFavorite = createAsyncThunk('favorites/removeFavorite', async
 
 const favoritesSlice = createSlice({
   name: 'favorites',
-  initialState: { items: [], status: 'idle', removeError: null },
+  initialState: { items: [], status: 'idle', removeError: null, _removedItem: null },
   reducers: {},
   extraReducers: builder => {
     builder
@@ -46,15 +46,23 @@ const favoritesSlice = createSlice({
       .addCase(addFavorite.fulfilled, (state, action) => {
         // After adding, fetch the updated favorites list to ensure UI is in sync
       })
-      // generated-by-copilot: optimistic removal — remove immediately, rollback with error on rejection
+      // generated-by-copilot: optimistic removal — stash removed item for rollback on failure
       .addCase(removeFavorite.pending, (state, action) => {
         state.removeError = null;
-        state.items = state.items.filter(b => b.id !== action.meta.arg.bookId);
+        const bookId = action.meta.arg.bookId;
+        state._removedItem = state.items.find(b => b.id === bookId) || null;
+        state.items = state.items.filter(b => b.id !== bookId);
       })
       .addCase(removeFavorite.fulfilled, (state) => {
         state.removeError = null;
+        state._removedItem = null;
       })
-      .addCase(removeFavorite.rejected, (state, action) => {
+      .addCase(removeFavorite.rejected, (state) => {
+        // Rollback: restore the item that was optimistically removed
+        if (state._removedItem) {
+          state.items = [...state.items, state._removedItem];
+          state._removedItem = null;
+        }
         state.removeError = 'Failed to remove favorite. Please try again.';
       });
   },

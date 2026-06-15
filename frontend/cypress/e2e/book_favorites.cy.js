@@ -46,10 +46,13 @@ describe('Book Favorites App', () => {
     // Go to favorites page (book was added in previous test)
     cy.get('a#favorites-link').click();
     cy.get('h2').contains('My Favorite Books').should('exist');
-    // Click the trash icon on the first favorite
-    cy.get('button[aria-label^="Remove"]').first().click();
-    // The item should be removed from the list (optimistic update)
-    cy.get('button[aria-label^="Remove"]').should('have.length', 0);
+    // Record the title of the first favorite before removing it
+    cy.get('li').first().find('strong').invoke('text').then((title) => {
+      // Click the trash icon on that first favorite
+      cy.get('li').first().find('button[aria-label^="Remove"]').click();
+      // That specific book should no longer appear in the list
+      cy.contains('strong', title).should('not.exist');
+    });
   });
 
   it('should logout and protect routes', () => {
