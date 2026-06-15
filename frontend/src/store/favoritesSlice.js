@@ -19,6 +19,20 @@ export const addFavorite = createAsyncThunk('favorites/addFavorite', async ({ to
   return bookId;
 });
 
+// generated-by-copilot: async thunk to update the comment on a favorite book
+export const updateComment = createAsyncThunk('favorites/updateComment', async ({ token, bookId, comment }, { rejectWithValue }) => {
+  const res = await fetch(`http://localhost:4000/api/favorites/${bookId}/comment`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ comment }),
+  });
+  if (!res.ok) return rejectWithValue(bookId);
+  return { bookId, comment };
+});
+
 // generated-by-copilot: async thunk to remove a book from the user's favorites
 export const removeFavorite = createAsyncThunk('favorites/removeFavorite', async ({ token, bookId }, { rejectWithValue }) => {
   const res = await fetch('http://localhost:4000/api/favorites/' + bookId, {
@@ -69,6 +83,12 @@ const favoritesSlice = createSlice({
           state._removedIndex = -1;
         }
         state.removeError = 'Failed to remove favorite. Please try again.';
+      })
+      // generated-by-copilot: update comment in place when PATCH succeeds
+      .addCase(updateComment.fulfilled, (state, action) => {
+        const { bookId, comment } = action.payload;
+        const book = state.items.find(b => b.id === bookId);
+        if (book) book.comment = comment;
       });
   },
 });

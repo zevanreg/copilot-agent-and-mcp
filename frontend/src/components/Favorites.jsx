@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchFavorites, removeFavorite } from '../store/favoritesSlice';
+import { fetchFavorites, removeFavorite, updateComment } from '../store/favoritesSlice';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Favorites.module.css';
 
@@ -11,6 +11,10 @@ const Favorites = () => {
   const removeError = useAppSelector(state => state.favorites.removeError);
   const token = useAppSelector(state => state.user.token);
   const navigate = useNavigate();
+
+  // generated-by-copilot: local state for tracking which book is being edited and draft comment text
+  const [editingId, setEditingId] = useState(null);
+  const [draftComment, setDraftComment] = useState('');
 
   useEffect(() => {
     if (!token) {
@@ -23,6 +27,19 @@ const Favorites = () => {
   // generated-by-copilot: dispatch removeFavorite with optimistic UI update
   const handleRemove = (bookId) => {
     dispatch(removeFavorite({ token, bookId }));
+  };
+
+  // generated-by-copilot: open comment editor pre-filled with existing comment
+  const handleEditComment = (book) => {
+    setEditingId(book.id);
+    setDraftComment(book.comment || '');
+  };
+
+  // generated-by-copilot: dispatch updateComment and close editor on success
+  const handleSaveComment = (bookId) => {
+    dispatch(updateComment({ token, bookId, comment: draftComment })).then(() => {
+      setEditingId(null);
+    });
   };
 
   if (status === 'loading') return <div>Loading...</div>;
@@ -54,9 +71,46 @@ const Favorites = () => {
         <ul className={styles.favoritesList}>
           {favorites.map(book => (
             <li key={book.id} className={styles.favoriteItem}>
-              <span className={styles.bookInfo}>
-                <strong>{book.title}</strong> by {book.author}
-              </span>
+              <div className={styles.bookDetails}>
+                <span className={styles.bookInfo}>
+                  <strong>{book.title}</strong> by {book.author}
+                </span>
+                {/* generated-by-copilot: inline comment editor / display */}
+                {editingId === book.id ? (
+                  <div className={styles.commentEditor}>
+                    <textarea
+                      className={styles.commentInput}
+                      value={draftComment}
+                      onChange={e => setDraftComment(e.target.value)}
+                      placeholder="Add a comment…"
+                      rows={2}
+                      aria-label="Edit comment"
+                    />
+                    <div className={styles.commentActions}>
+                      <button className={styles.saveBtn} onClick={() => handleSaveComment(book.id)}>Save</button>
+                      <button className={styles.cancelBtn} onClick={() => setEditingId(null)}>Cancel</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.commentRow}>
+                    <span className={styles.commentText}>
+                      {book.comment ? book.comment : <em className={styles.noComment}>No comment yet</em>}
+                    </span>
+                    <button
+                      className={styles.editCommentBtn}
+                      onClick={() => handleEditComment(book)}
+                      aria-label={`Edit comment for ${book.title}`}
+                      title="Edit comment"
+                    >
+                      {/* generated-by-copilot: pencil icon SVG */}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </div>
               <button
                 className={styles.trashBtn}
                 onClick={() => handleRemove(book.id)}

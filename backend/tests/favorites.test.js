@@ -78,7 +78,9 @@ describe('Favorites API', () => {
     const token = getToken('sandra');
     const users = JSON.parse(fs.readFileSync(usersFile, 'utf-8'));
     const sandra = users.find(u => u.username === 'sandra');
-    const alreadyFav = sandra.favorites[0];
+    // generated-by-copilot: handle both legacy string IDs and normalized { bookId } objects
+    const rawFav = sandra.favorites[0];
+    const alreadyFav = typeof rawFav === 'string' ? rawFav : rawFav.bookId;
     const res = await request(app)
       .post('/api/favorites')
       .set('Authorization', `Bearer ${token}`)
@@ -117,7 +119,9 @@ describe('Favorites API', () => {
     const token = getToken('sandra');
     const users = JSON.parse(fs.readFileSync(usersFile, 'utf-8'));
     const sandra = users.find(u => u.username === 'sandra');
-    const existingFav = sandra.favorites[0];
+    // generated-by-copilot: handle both legacy string IDs and normalized { bookId } objects
+    const rawFav = sandra.favorites[0];
+    const existingFav = typeof rawFav === 'string' ? rawFav : rawFav.bookId;
     const res = await request(app)
       .delete('/api/favorites/' + existingFav)
       .set('Authorization', 'Bearer ' + token);
