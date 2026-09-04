@@ -37,3 +37,7 @@ Everything is descripted step by step before each exercise.
 ## Part 5: GitHub Copilot CLI
 
 - [Demo 8: Using GitHub Copilot CLI on local terminal](16-copilot-cli.md)
+
+## Part 6: Custom Subagent Orchestration
+
+- [Demo 9: Orchestrating RUG, SWE, and QA subagents](17-rug-qa-swe-subagents.md)
